@@ -1,0 +1,45 @@
+{
+  "dockerComposeFile": "../compose.yml",
+  "service": "cloudwatch-logs-csv-formatter",
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "editorconfig.editorconfig",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "prisma.prisma",
+        "shd101wyy.markdown-preview-enhanced",
+        "bierner.markdown-mermaid",
+        "sohamkamani.code-eol"
+      ],
+      "settings": {
+        "[typescript]": {
+          "editor.renderWhitespace": "all",
+          "editor.suggestSelection": "first",
+          "editor.detectIndentation": false,
+          "editor.tabSize": 2,
+          "editor.accessibilitySupport": "off",
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.formatOnPaste": true,
+          "editor.formatOnSave": true,
+          "editor.formatOnType": true,
+          "updateImportsOnFileMove.enabled": "always",
+          "importSorter.generalConfiguration.sortOnBeforeSave": true,
+          "prettier.singleQuote": true,
+          "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+          },
+          "tsdk": "node_modules/typescript/lib",
+          "eslint.experimental.useFlatConfig": true
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[markdown]": {
+          "editor.formatOnSave": false
+        }
+      }
+    }
+  }
+}

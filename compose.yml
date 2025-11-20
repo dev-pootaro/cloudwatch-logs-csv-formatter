@@ -1,0 +1,11 @@
+services:
+  cloudwatch-logs-csv-formatter:
+    container_name: cloudwatch-logs-csv-formatter
+    user: node
+    build: ./.docker/node
+    volumes:
+      - ../cloudwatch-logs-csv-formatter:/workspace
+    stdin_open: true
+    network_mode: host
+    env_file:
+      - .env
