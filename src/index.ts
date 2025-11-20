@@ -1,6 +1,17 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
+/**
+ * Normalize a CSV string by replacing newline characters that appear inside
+ * quoted fields with spaces while preserving escaped quotes.
+ *
+ * CloudWatch log exports often contain multiline messages embedded in a single
+ * CSV field. When those newlines are not flattened, downstream CSV consumers
+ * treat them as record breaks and parsing fails. This helper walks through the
+ * text character by character so it can distinguish structural newlines from
+ * ones that belong to the field content and convert only the latter into
+ * spaces.
+ */
 function flattenNewlinesInCsv(csvText: string): string {
   let result = '';
   let insideQuote = false;
@@ -31,6 +42,15 @@ function flattenNewlinesInCsv(csvText: string): string {
   return result;
 }
 
+/**
+ * Recursively traverse the input directory, flattening newline characters in
+ * every `.csv` file and writing the processed output to the matching path under
+ * the output directory.
+ *
+ * The function mirrors the input directory structure in the output. New
+ * directories are created as needed before files are written, ensuring callers
+ * can point to empty output roots without pre-creating folders.
+ */
 function processDirectory(inputDir: string, outputDir: string) {
   const entries = fs.readdirSync(inputDir, { withFileTypes: true });
 
@@ -55,6 +75,14 @@ function processDirectory(inputDir: string, outputDir: string) {
   }
 }
 
+/**
+ * Entry point for the CLI script.
+ *
+ * The function resolves input/output directories from arguments or the
+ * `INPUT_CSV_DIR` and `OUTPUT_CSV_DIR` environment variables (defaulting to
+ * `/workspace/input` and `/workspace/output`). It validates the input
+ * directory, prepares the output directory, and initiates CSV processing.
+ */
 function main(
   inputDir = process.env.INPUT_CSV_DIR ?? '/workspace/input',
   outPutDir = process.env.OUTPUT_CSV_DIR ?? '/workspace/output'
